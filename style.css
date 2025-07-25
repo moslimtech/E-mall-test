@@ -161,16 +161,26 @@ main {
     gap: 25px; /* مسافة بين البطاقات */
 }
 
-/* ==== بطاقات شفافة مع تأثير زجاجي (Glassmorphism) ==== */
+/* ==== بطاقات شفافة مع تأثير زجاجي (Glassmorphism) وحدودية دائرية ==== */
 .place-card, .ad-card {
-    background: rgba(255,255,255,0.18) !important;
-    backdrop-filter: blur(10px) saturate(140%);
-    -webkit-backdrop-filter: blur(10px) saturate(140%);
-    border: 1.5px solid rgba(255,255,255,0.28);
-    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.18), 0 1.5px 6px 0 rgba(0,0,0,0.10);
-    transition: transform 0.4s cubic-bezier(.25,.8,.25,1), box-shadow 0.4s cubic-bezier(.25,.8,.25,1), background 0.4s;
+    background: rgba(255,255,255,0.22) !important;
+    backdrop-filter: blur(14px) saturate(160%);
+    -webkit-backdrop-filter: blur(14px) saturate(160%);
+    border: 2.5px solid #e0e7ff;
+    box-shadow: 0 10px 32px 0 rgba(43, 92, 255, 0.13), 0 2px 8px 0 rgba(37, 211, 102, 0.10);
+    border-radius: 32px;
+    transition: transform 0.5s cubic-bezier(.25,.8,.25,1), box-shadow 0.5s cubic-bezier(.25,.8,.25,1), background 0.5s;
     position: relative;
     overflow: hidden;
+    padding: 32px 22px 26px 22px;
+    margin-bottom: 10px;
+    min-height: 320px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 0.7em;
+    animation: cardFadeIn 0.8s cubic-bezier(.25,.8,.25,1) forwards;
 }
 .place-card::before, .ad-card::before {
     content: '';
@@ -179,41 +189,73 @@ main {
     left: -60%;
     width: 220%;
     height: 220%;
-    background: radial-gradient(circle at 60% 40%, #a5b4fc33 0%, transparent 70%);
-    opacity: 0.18;
+    background: radial-gradient(circle at 60% 40%, #a5b4fc44 0%, transparent 70%);
+    opacity: 0.22;
     z-index: 0;
     transition: opacity 0.4s;
     pointer-events: none;
 }
 .place-card:hover, .ad-card:hover {
-    transform: translateY(-14px) scale(1.035) rotate(-0.7deg);
-    box-shadow: 0 20px 48px 0 rgba(31, 38, 135, 0.22), 0 4px 16px 0 rgba(0,0,0,0.13);
-    background: rgba(255,255,255,0.28) !important;
+    transform: translateY(-18px) scale(1.045) rotate(-1.2deg);
+    box-shadow: 0 24px 56px 0 rgba(43, 92, 255, 0.18), 0 6px 20px 0 rgba(37, 211, 102, 0.13);
+    background: rgba(255,255,255,0.32) !important;
 }
 .place-card:hover::before, .ad-card:hover::before {
-    opacity: 0.32;
+    opacity: 0.36;
 }
 
-/* ==== أنيميشن دخول البطاقات ==== */
-.place-card, .ad-card {
-    opacity: 0;
-    transform: translateY(40px) scale(0.98);
-    animation: cardFadeIn 0.8s cubic-bezier(.25,.8,.25,1) forwards;
+/* ==== صورة الشعار داخل البطاقة بشكل دائري وظل ==== */
+.place-card .logo, .ad-media-container img {
+    width: 110px;
+    height: 110px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 18px;
+    border: 4px solid #25d36644;
+    box-shadow: 0 4px 18px 0 #2b5cff22;
+    background: #fff;
+    transition: box-shadow 0.3s, border 0.3s;
+}
+.place-card:hover .logo, .ad-card:hover .ad-media-container img {
+    box-shadow: 0 10px 32px 0 #25d36633;
+    border: 4px solid #2b5cff44;
 }
 
-@keyframes cardFadeIn {
-    to {
-        opacity: 1;
-        transform: translateY(0) scale(1);
-    }
+/* ==== عنوان ونص البطاقة بتدرج وأسلوب عصري ==== */
+.place-card h3, .ad-card h4 {
+    background: linear-gradient(90deg, #25d36622 0%, #2b5cff11 100%);
+    color: #2b5cff;
+    font-size: 1.32rem;
+    font-weight: bold;
+    letter-spacing: 0.2px;
+    text-shadow: 0 1px 6px #2b5cff11;
+    border-radius: 12px;
+    padding: 8px 18px;
+    margin: 0 0 10px 0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    box-shadow: 0 2px 12px 0 #2b5cff11;
 }
-
-/* تدرج زمني للبطاقات (تأخير تلقائي) */
-#places-container .place-card {
-    animation-delay: calc(var(--card-index, 0) * 0.08s);
-}
-#ads-container .ad-card {
-    animation-delay: calc(var(--card-index, 0) * 0.08s);
+.place-card p, .ad-card p {
+    background: linear-gradient(90deg, #e0e7ff 0%, #fffbe7 100%);
+    color: #1a237e;
+    font-family: 'Cairo', 'Tajawal', 'Arial', sans-serif;
+    font-weight: 600;
+    border-radius: 14px;
+    box-shadow: 0 2px 12px 0 #2b5cff11;
+    padding: 7px 16px;
+    margin: 6px 0 0 0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-width: 70%;
+    justify-content: center;
+    font-size: 1.08rem;
+    letter-spacing: 0.1px;
+    position: relative;
+    z-index: 3;
+    animation: popIn 0.7s cubic-bezier(.25,.8,.25,1);
 }
 
 /* ==== تحسينات إضافية على البطاقات ==== */
@@ -859,4 +901,72 @@ footer {
     font-weight: bold;
     letter-spacing: 0.2px;
     text-shadow: 0 1px 6px #2b5cff11;
+}
+
+/* ==== مربع تسجيل صاحب المكان بجانب العنوان (نسخة أصغر وفي الجنب) ==== */
+.owner-register-box {
+    background: #fff;
+    color: #2b5cff;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px #2b5cff22;
+    padding: 0.35em 1em 0.35em 1em;
+    display: flex;
+    align-items: center;
+    gap: 0.5em;
+    font-size: 0.98rem;
+    font-weight: 500;
+    border: 1.5px solid #25d36644;
+    margin-right: auto;
+    margin-left: 0;
+    transition: box-shadow 0.2s, border 0.2s, background 0.2s;
+    position: relative;
+    order: 2;
+}
+.owner-register-box span {
+    font-size: 1em;
+    font-weight: 500;
+    letter-spacing: 0.2px;
+    color: #2b5cff;
+    text-shadow: none;
+}
+.owner-register-box .register-btn {
+    background: linear-gradient(90deg, #25d366 0%, #2b5cff 100%);
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 0.25em 1em;
+    font-size: 0.98em;
+    font-weight: bold;
+    text-decoration: none;
+    box-shadow: 0 1px 6px #2b5cff22;
+    transition: background 0.2s, box-shadow 0.2s, color 0.2s, transform 0.2s;
+    cursor: pointer;
+    margin-right: 0.4em;
+    margin-left: 0.1em;
+    letter-spacing: 0.2px;
+    position: relative;
+}
+.owner-register-box .register-btn:hover {
+    background: linear-gradient(90deg, #2b5cff 0%, #25d366 100%);
+    color: #fff;
+    box-shadow: 0 2px 10px #25d36633;
+    transform: scale(1.04);
+}
+@media (max-width: 600px) {
+    .owner-register-box {
+        font-size: 0.92rem;
+        padding: 0.22em 0.5em 0.22em 0.5em;
+        gap: 0.3em;
+    }
+    .owner-register-box span {
+        font-size: 0.95em;
+    }
+    .owner-register-box .register-btn {
+        font-size: 0.92em;
+        padding: 0.18em 0.7em;
+    }
+}
+/* ترتيب عناصر الهيدر ليكون المربع في أقصى الجهة */
+header > div {
+    justify-content: flex-start !important;
 }
